@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "../../../test-utlis/testing-library-utils"
 import OrderEntry from "../OrderEntry";
 import { rest } from "msw";
 import { server } from "../../../mocks/server";
@@ -8,16 +8,16 @@ test("handles errors for scoops and toppings routes", async () => {
   // & toppings endpoint, so here we have overridden these endpoint in order to
   // throw erros
   server.resetHandlers(
-    rest.get("http://localhost:3030/scoops", (req, res, ctx) =>
-      res(ctx.status(500))
-    ),
-    rest.get("http://localhost:3030/toppings", (req, res, ctx) =>
-      res(ctx.status(500))
-    )
+    rest.get("http://localhost:3030/scoops", (req, res, ctx) => {
+      return res(ctx.status(500));
+    }),
+    rest.get("http://localhost:3030/toppings", (req, res, ctx) => {
+      return res(ctx.status(500));
+    })
   );
 
   render(<OrderEntry />);
-  // here with the below code we get an error saying alert not found
+  // here with the below code sometimes we get an error saying alert not found
   // and it is very interesting here to find out why it is doing so
   // reason is we expecting error/alert asynchrously from two options
   // one is scoops and other is toppings , it means we are getting two alerts
@@ -30,17 +30,14 @@ test("handles errors for scoops and toppings routes", async () => {
   // });
 
   // here waitFor will wait to resolve all promises
+  // use waitFor for tests where await findBy is not enough
+  // for safer side we have wrapped that inside waitFor
   await waitFor(async () => {
+    // here you might have observed we are not finding alerts by name
+    // reactBootStrap laert doesn't support name value
+    // for more infor check this link => https://www.udemy.com/course/react-testing-library/learn/lecture/32177920#overview
+
     const alerts = await screen.findAllByRole("alert");
     expect(alerts).toHaveLength(2);
-    // you can assert alert content as below
-    // // eslint-disable-next-line testing-library/no-wait-for-multiple-assertions
-    // expect(alerts[0]).toHaveTextContent(
-    //   "An unexpected error occured, please try again later"
-    // );
-    // // eslint-disable-next-line testing-library/no-wait-for-multiple-assertions
-    // expect(alerts[1]).toHaveTextContent(
-    //   /^An unexpected error occured, please try again later$/
-    // );
   });
 });

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "../../../test-utlis/testing-library-utils";
 import Options from "../Options";
 
 // here server means mock server not actual server
