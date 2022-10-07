@@ -33,9 +33,13 @@ test("display image for each topping from server", async () => {
   const toppingImages = await screen.findAllByRole("img", {
     name: /topping$/i,
   });
-  expect(toppingImages).toHaveLength(2);
+  expect(toppingImages).toHaveLength(3);
 
   // confirm alt text of topping images
   const altTexts = toppingImages.map((element) => element.alt);
-  expect(altTexts).toEqual(["Hot fudge topping", "Peanut butter cups topping"]);
+  expect(altTexts).toEqual([
+    "Cherries topping",
+    "M&Ms topping",
+    "Hot fudge topping",
+  ]);
 });

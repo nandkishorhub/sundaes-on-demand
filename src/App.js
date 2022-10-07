@@ -1,15 +1,10 @@
-import logo from "./logo.svg";
 import "./App.css";
-import SummaryForm from "./page/summary/SummaryForm";
-import Options from "./page/entry/Options";
+import OrderEntry from "./page/entry/OrderEntry";
 
 function App() {
-  return (
-    <div className="App">
-      <Options optionType="scoops" />
-      <SummaryForm />
-    </div>
-  );
+  return <div className="App">
+    <OrderEntry/>
+  </div>;
 }
 
 export default App;
