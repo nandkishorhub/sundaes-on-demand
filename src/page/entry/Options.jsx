@@ -6,7 +6,6 @@ import { Row } from "react-bootstrap";
 import AlertBanner from "../common/AlertBanner";
 import { pricePeritem } from "../../constants";
 import { useOrderDetails } from "../../context/OrderDetails";
-import { formatCurrency } from "../../context/OrderDetails"; 
 export default function Options({ optionType }) {
   const [items, setItems] = useState([]);
   const [error, setError] = useState(false);
@@ -32,9 +31,11 @@ export default function Options({ optionType }) {
       key={item.name}
       name={item.name}
       imagePath={item.imagePath}
-      updateItemCount={(itemName, newItemCount) =>
-        updateItemCount(itemName, newItemCount, optionType)
-      }
+      // here we are sending updateItemCount as a prop with
+      // optionType param set from here as this param is availale here only
+      // updateItemCount={(itemName, newItemCount) =>
+      //   updateItemCount(itemName, newItemCount, optionType)
+      // }
     />
   ));
 

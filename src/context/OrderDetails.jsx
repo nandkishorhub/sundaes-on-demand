@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useMemo, useEffect } from "react";
 import { pricePeritem } from "../constants";
 
-// format currancy
+// format currency to two digit decimal ex: $0.00
 export function formatCurrency(currency) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -62,8 +62,21 @@ export function OrderDetailsProvider(props) {
       optionsCountsMap.set(itemName, parseInt(newItemCount));
       setOptionCounts(newOptionCounts);
     }
-    return [{ ...optionCounts, totals }, updateItemCount];
+
+    const resetOrder = () => {
+      setOptionCounts({
+        scoops: new Map(),
+        toppings: new Map(),
+      });
+    };
+    return [{ ...optionCounts, totals }, updateItemCount, resetOrder];
   }, [optionCounts, totals]);
 
-  return <OrderDetails.Provider value={value} {...props} />;
+  return (
+    <OrderDetails.Provider value={value}>
+      {props.children}
+    </OrderDetails.Provider>
+    // we can use below syntax also both are doing same job
+    //<OrderDetails.Provider value={value} {...props} />;
+  );
 }

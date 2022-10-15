@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { OrderDetailsProvider } from "../context/OrderDetails";
 
-// here options can be other render parameters
+// here "options" can be other render parameters
 const renderWithContext = (ui, options) =>
   render(ui, { wrapper: OrderDetailsProvider, ...options });
 

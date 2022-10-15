@@ -17,7 +17,7 @@ test("initial conditions", () => {
 });
 
 test("Checkbox enables button on first click and disbales on second click", () => {
-  render(<SummaryForm />);
+  render(<SummaryForm setOrderPhase={jest.fn()} />);
   const checkbox = screen.getByRole("checkbox", {
     name: /terms and conditions/i,
   });
@@ -25,6 +25,8 @@ test("Checkbox enables button on first click and disbales on second click", () =
 
   userEvent.click(checkbox);
   expect(confirmButton).toBeEnabled();
+
+  userEvent.click(confirmButton);
 
   userEvent.click(checkbox);
   expect(confirmButton).toBeDisabled();
