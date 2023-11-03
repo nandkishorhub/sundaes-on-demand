@@ -8,7 +8,7 @@ import Options from "../Options";
 // Actually when we rendering render(<Options optionType="scoops" />);
 // Options component will have api call coded inside it
 // but here for test it doesn't call actual server rather it calls
-// mock server as we have mock service setup in place in our application
+// mock server as we have mock service setup (src/mocks) in place in our application
 // test itself only deals with mock service worker in that setup file
 // that we have configured
 test("display image for each scoop from server", async () => {

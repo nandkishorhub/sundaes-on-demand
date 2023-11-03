@@ -1,14 +1,7 @@
 import { createContext, useContext, useState, useMemo, useEffect } from "react";
 import { pricePeritem } from "../constants";
+import { formatCurrency } from "../utilities";
 
-// format currency to two digit decimal ex: $0.00
-export function formatCurrency(currency) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  }).format(currency);
-}
 const OrderDetails = createContext();
 
 // create custom hook to check whether we're inside a provider
@@ -54,6 +47,7 @@ export function OrderDetailsProvider(props) {
     });
   }, [optionCounts]);
 
+  // Actual state data
   const value = useMemo(() => {
     function updateItemCount(itemName, newItemCount, optionType) {
       // make a copy of the current option counts, so as not to mutate in place
@@ -71,6 +65,11 @@ export function OrderDetailsProvider(props) {
     };
     return [{ ...optionCounts, totals }, updateItemCount, resetOrder];
   }, [optionCounts, totals]);
+
+ 
+
+  // Here value is the state data we are passing to underline component
+  // It is a actual data which is going to render as a part of that component
 
   return (
     <OrderDetails.Provider value={value}>

@@ -1,5 +1,4 @@
 import {
-  findByRole,
   render,
   screen,
   waitFor,
@@ -22,18 +21,19 @@ test("handles errors for scoops and toppings routes", async () => {
     })
   );
 
-  // here in order to avoid any tentive erros
+  // here in order to avoid any tentative errors
   // we have passed mock function to setOrderPhase
   // here we are just testing for error so anyway this prop
   // doesn;t have much imp but sometime we might get test error of not finding
   // prop function in code so to avoid that we have passed mock function
   render(<OrderEntry setOrderPhase={jest.fn()} />);
+  
   // here with the below code sometimes we get an error saying alert not found
   // and it is very interesting here to find out why it is doing so
   // reason is we expecting error/alert asynchrously from two options
   // one is scoops and other is toppings , it means we are getting two alerts
   // which is one after another and that is asychousnly so actually what happening here is
-  // await api here waiting for alerts to be in document so once first alert it recicves it is satiiesying
+  // await api here waiting for alerts to be in document so once first alert it recicves it is satiesfying
   // and moving ahead but for second alert we are not getting anything as it is not waiting for second alert
 
   // const alerts = await screen.findAllByRole("alert", {
@@ -64,10 +64,13 @@ test("Order button disable if no scoops added", async () => {
   const orderButton = screen.getByRole("button", { name: /order sundae/i });
   expect(orderButton).toBeDisabled();
 
+  // Here we have queried to find input of type number whose label is "Vanilla"
   const vanillaInput = await screen.findByRole("spinbutton", {
     name: "Vanilla",
   });
 
+   // Clear Vanilla selection if selected already
+   // Then add 1 count of vanilla scoop using userEvent
   userEvent.clear(vanillaInput);
   userEvent.type(vanillaInput, "1");
   expect(scoopSubtotal).toHaveTextContent("2.00");

@@ -6,10 +6,10 @@ import { useOrderDetails } from "../../context/OrderDetails";
 export default function OrderSummary({ setOrderPhase }) {
   const [optionDetails] = useOrderDetails();
 
-  const scoopArray = Object.entries(optionDetails.scoops);
-  const scoopList = scoopArray.map(([key, value]) => (
+  const scoopArrayKeys = [...optionDetails.scoops.keys()];
+  const scoopList = scoopArrayKeys.map((key) => (
     <li key={key}>
-      {value} {key}
+      {optionDetails.scoops.get(key)} {key}
     </li>
   ));
 
@@ -18,7 +18,7 @@ export default function OrderSummary({ setOrderPhase }) {
   let toppingsDisplay = null;
 
   if (!optionDetails.totals.toppings.includes("0.00")) {
-    const toppingsArray = Object.keys(optionDetails.toppings);
+    const toppingsArray = [...optionDetails.toppings.keys()];
     const toppingList = toppingsArray.map((key) => <li key={key}>{key}</li>);
     toppingsDisplay = (
       <>

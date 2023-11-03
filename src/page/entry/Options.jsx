@@ -15,9 +15,13 @@ export default function Options({ optionType }) {
   useEffect(() => {
     axios
       .get(`http://localhost:3030/${optionType}`)
-      .then((response) => setItems(response.data))
+      .then((response) => {
+        return setItems(response.data)
+      })
       .catch((error) => setError(true));
+      
   }, [optionType]);
+
 
   if (error) {
     return <AlertBanner />;

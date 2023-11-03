@@ -26,8 +26,6 @@ test("Checkbox enables button on first click and disbales on second click", () =
   userEvent.click(checkbox);
   expect(confirmButton).toBeEnabled();
 
-  userEvent.click(confirmButton);
-
   userEvent.click(checkbox);
   expect(confirmButton).toBeDisabled();
 });
