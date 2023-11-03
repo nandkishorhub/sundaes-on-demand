@@ -73,7 +73,7 @@ test("order phases for happy path", async () => {
 
   // confirm order number number on confirmation page
   // check confirmation page text
-  // this one is async because here post call to servers gooes
+  // this one is async because here post call to servers goes
   const thankYouHeader = await screen.findByRole("heading", {
     name: /thank you/i,
   });

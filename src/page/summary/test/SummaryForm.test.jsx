@@ -41,7 +41,8 @@ test("popover reponds to hover", async () => {
     /No ice cream will actually be delivered/i
   );
   // here queryByText returns null if it not found and return node if found
-  // it does not throw error directly if not found
+  // it does not throw error directly if not found so thats why we use query functions
+  // to check non existance of elemements
   expect(nullPopover).not.toBeInTheDocument();
 
   // popover appears upon mousehover of checkbox label
@@ -58,7 +59,7 @@ test("popover reponds to hover", async () => {
   // after unhover , but below code will fail the test
   // reason is react removes popver asynchonously so it still get popover in page and
   // test gets failed, so to overcome this problem we have written solution for waiting
-  // that popver to be removed from dcoument
+  // that popver to be removed from document
   // const nullPopoverAgain = screen.queryByText(
   //   /No ice cream will actually be delivered/i
   // );
@@ -69,4 +70,8 @@ test("popover reponds to hover", async () => {
   await waitForElementToBeRemoved(() =>
     screen.queryByText(/No ice cream will actually be delivered/i)
   );
+
+  expect(
+    screen.queryByText(/No ice cream will actually be delivered/i)
+  ).not.toBeInTheDocument();
 });
